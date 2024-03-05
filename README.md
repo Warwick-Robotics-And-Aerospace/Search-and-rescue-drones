@@ -13,6 +13,9 @@ Central Control is analagous to the ground control station.
 
 Main is the main loop which calls functions inside of Drone and CentralControl to update the scene.
 
+Path creator program takes in a last known location and generates waypoints. Still TODO is integrating this with the matlab simulation.
+Path creator currently supports victor sierra currently. TODO More search patterns
+
 ### Todo
 
 Still uncertain is how to make the matlab code control the drones which are running ardupilot, once we move away from simulations towards real drones.
