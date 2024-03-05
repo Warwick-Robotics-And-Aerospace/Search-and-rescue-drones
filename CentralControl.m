@@ -7,8 +7,8 @@ classdef CentralControl
         % function obj = CentralControl(inputArg1)
             
         % end
-        
-% ========= this entire function is not actually helpful so i've commented it just incase =========
+
+% ========= this entire function is not actually helpful so i've commented it just incase its handy to copy from =========
 
         % function [distancesMatrix] = CalculateDistancesMatrix(~, dronePositions) 
         %     % Returns a symmetric matrix which is NxN: N is the number of drones. 
@@ -35,36 +35,67 @@ classdef CentralControl
         %     end
         % end
 
-        function vectorToEscape = findEscapeDirection(obj,drone,dronePositions) 
+        function vectorToEscape = FindEscapeDirection(obj,drone,otherDronePositions) 
         % find the direction that a given drone should fly away if it's too
         % close to another drone(s).
 
-            positionsOfdronesWhichAreTooClose = [];
+            posOfdronesTooClose =  obj.FindNearbyDrones(drone,otherDronePositions);
 
-            for i = 1 : size(dronePositions,2)
-                droneiPosition = dronePositions(:,i);
-            
-                if drone.position == droneiPosition
-                    continue
-                
-                elseif norm(drone.position - droneiPosition) < Drone.safetyAreaRadius                    
-                    positionsOfdronesWhichAreTooClose = [positionsOfdronesWhichAreTooClose , droneiPosition];
-                end    
-            end
-
-            ourDroneIsSafe = size(positionsOfdronesWhichAreTooClose,2) == 0;
-            if ourDroneIsSafe
-                vectorToEscape = NaN
+            if isempty(posOfdronesTooClose)
+                vectorToEscape = [0,0]';
                 return
             end
 
-            centerOfMass = sum(positionsOfdronesWhichAreTooClose, 2) / size(positionsOfdronesWhichAreTooClose,2);
+            centerOfMass = sum(posOfdronesTooClose, 2) / size(posOfdronesTooClose,2);          
 
             vectorToEscape = drone.position - centerOfMass;
+            
+            if vectorToEscape == 0
+                vectorToEscape = rand(2,1);
+            end
+
+            vectorToEscape = vectorToEscape  / norm(vectorToEscape);
             return
 
         end
-        
+
+        function MakeDroneRunFromNeighbors(obj,drone,otherDronePositions)
+            % signal to a drone that it must flee , and in which direction
+
+            vectorToEscape = obj.FindEscapeDirection(drone,otherDronePositions);
+
+            droneIsInDanger = all( vectorToEscape ~= 0 ); 
+            drone.panicMode = droneIsInDanger;                   
+            drone.escapeDirection = vectorToEscape;
+
+        end
+
+        function DronesAvoidance(obj,drones)
+            droneQuantity = length(drones);
+
+            dronePositions = zeros(2,droneQuantity);
+            for j = 1:droneQuantity
+                dronePositions(:,j) = drones{j}.position;
+            end
+
+            for z = 1:droneQuantity
+                dronePositionsWithoutZ = dronePositions;
+                dronePositionsWithoutZ(:,z) = [];
+                obj.MakeDroneRunFromNeighbors(drones{z},dronePositionsWithoutZ);    
+            end
+
+        end
+
+        function nearbyDrones = FindNearbyDrones(~,drone,otherDronePositions)
+            nearbyDrones = [];
+            for i = 1 : size(otherDronePositions,2)
+                droneiPosition = otherDronePositions(:,i);        
+                if norm(drone.position - droneiPosition) < Drone.safetyAreaRadius                    
+                    nearbyDrones = [nearbyDrones , droneiPosition]; %#ok<AGROW>
+                end    
+            end
+        end
 
     end
+
 end

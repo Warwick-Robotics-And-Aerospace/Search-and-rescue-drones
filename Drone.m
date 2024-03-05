@@ -2,10 +2,12 @@ classdef Drone < PhysicalObject % drone inherits behavior from PhysicalObject
 
     properties (SetAccess = public)
         % instance variables
-        waypoint = [0,0]'; % metres
-        mass = 0.7; % kg        
-        motorForce = 4;
-        flightMode = "normal";
+        waypoint (2,1) {mustBeNonNan} = [0,0]'; % metres
+        mass (1,1) = 0.7; % kg        
+        motorForce  = 4;
+        flightMode string = "normal";
+        panicMode (1,1) logical  = false;
+        escapeDirection (2,1) {mustBeNonNan} = [0,0]';
     end
 
     properties (Constant)
@@ -24,17 +26,20 @@ classdef Drone < PhysicalObject % drone inherits behavior from PhysicalObject
 
 
 
-        function accelerationFromMotors = CalculateMotorAcceleration(obj)
+        function accelerationFromMotors = CalculateMotorAcceleration(obj)           
 
 
             vectorToWaypoint = obj.waypoint - obj.position;
             targetDirection = vectorToWaypoint / norm(vectorToWaypoint);
             distanceToWaypoint = norm(vectorToWaypoint);
 
-            if obj.flightMode == "normal"
-                targetSpeed = abs(distanceToWaypoint)^0.9;
+            if obj.panicMode == true
+                targetDirection = obj.escapeDirection;
+                targetSpeed = 1000000000; % Drone should fly away as fast as it can
+            elseif obj.flightMode == "normal"
+                targetSpeed = abs(distanceToWaypoint)^0.8;
             elseif obj.flightMode == "cruise"
-                targetSpeed = min(abs(distanceToWaypoint)^0.9, 10);                
+                targetSpeed = min(abs(distanceToWaypoint)^0.8, 10);                
             else
                 disp("Flight mode error:")
                 disp(obj.flightMode)
@@ -87,7 +92,7 @@ classdef Drone < PhysicalObject % drone inherits behavior from PhysicalObject
 
         function Update(obj)
             obj.Move()
-            % obj.DrawSafetyBubble()
+            obj.DrawSafetyBubble()
         end
 
         function SetWaypoint(obj, waypoint)
