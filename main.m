@@ -1,8 +1,8 @@
 clear drones
-droneQuantity = 4;
+droneQuantity = 6;
 simulationTime = 30; % seconds
 centralControl = CentralControl;
-waypoints = [50,20,90,100 ; 20,40,100,10];
+waypoints = [50,20,90,100,20,80 ; 20,40,100,10,60,60];
 
 drones = {nan,nan,nan,nan}; % pre-allocate drones' cell array 
 for index = 1:droneQuantity
@@ -16,6 +16,10 @@ end
 
 drones{1}.flightMode = "cruise";
 drones{2}.flightMode = "cruise";
+
+drones{5}.SetPosition([80,62]')
+drones{6}.SetPosition([20,60]')
+
 
 dt = PhysicalObject.dt;
 
