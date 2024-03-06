@@ -1,6 +1,6 @@
 import math
 #This can be used to visualise the thing later however I have completly forgot how to get matplotlib
-import matplotlib.pyplot as pyplot
+#import matplotlib.pyplot as pyplot
 #This can be improved by calcualting drift on the fly but that is proabbly too difficult for me not to mention I don't know how to do that.
 
 #Not yet implemented offsetting the angle by 30 degrees for another drone.
@@ -32,8 +32,8 @@ def victorSierra(droneSpeed,driftSpeed,driftAngle,legTime): #Creates a path usin
     for i in range(len(runPositionsX)):
         print (" [ %0.3f, %0.3f] " % (runPositionsX[i],runPositionsY[i]))
 
-    pyplot.figure()
-    pyplot.plot(runPositionsX,runPositionsY)
+    #pyplot.figure()
+    #pyplot.plot(runPositionsX,runPositionsY)
 
 #Calls victor Sierra, later this will be changed as we add more funcitons
     
