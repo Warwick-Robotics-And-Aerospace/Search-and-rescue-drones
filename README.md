@@ -3,6 +3,8 @@
 
 This repo is software to simulate (and in the future, control) search and rescue drones. The intention is to connect the search & rescue pathfinding with ardupilot in future.
 
+Currently, the simulation is 2D, with a top down view.
+
 Object detection software will be needed to identify lost souls from a camera feed, and possibly also a feed from a infra-red camera too. Software for this is yet to be implemented.
 
 ## Detailed Code Explanation
