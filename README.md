@@ -8,9 +8,9 @@ Currently, the simulation is 2D, with a top down view. **A gif of this simulatio
 Object detection software will be needed to identify lost souls from a camera feed, and possibly also a feed from a infra-red camera too. Software for this is yet to be implemented.
 
 ## Detailed Code Explanation
-The 4 important matlab files are Drone.m, CentralControl.m, Main.m and PhysicialObject.m.
+The 4 matlab files are Drone.m, CentralControl.m, Main.m and PhysicialObject.m.
 
-Drone and CentralControl and PhysicalObject are all classes. Drone inherits from PhysicalObject. It is possible that obstacles like trees and also search targets like people will be added as classes into the simulation - and they will inherit from PhysicalObject too.
+Drone and CentralControl and PhysicalObject are all classes. Drone inherits from PhysicalObject. It is possible that obstacles like trees and also search targets like people will be added as classes into the simulation - and they will inherit from PhysicalObject too. These classes work together to simulate the movement, interaction, and collision avoidance behavior of drones within a simulated environment. The PhysicalObject class provides a foundation for representing objects with physical properties, while the Drone class extends this functionality to model drone-specific behavior. The CentralControl class manages the coordination and interaction between multiple drones to ensure safe and efficient operation within the simulation environment.
 
 Central Control designed to be ran on a central control station.
 
