@@ -7,7 +7,7 @@ Currently, the simulation is 2D, with a top down view. **A gif of this simulatio
 
 Object detection software will be needed to identify lost souls from a camera feed, and possibly also a feed from a infra-red camera too. Software for this is yet to be implemented.
 
-## Detailed Matlab Code Explanation
+## Matlab Simulation
 The 4 matlab files are Drone.m, CentralControl.m, Main.m and PhysicialObject.m. Drone and CentralControl and PhysicalObject are all classes. Drone inherits from PhysicalObject. It is possible that obstacles like trees and also search targets like people will be added as classes into the simulation - and they will inherit from PhysicalObject too. These classes work together to simulate the movement, interaction, and collision avoidance behavior of drones within a simulated environment. The PhysicalObject class provides a foundation for representing objects with physical properties, while the Drone class extends this functionality to model drone-specific behavior. The CentralControl class manages the coordination and interaction between multiple drones to ensure safe and efficient operation within the simulation environment.
 
 Summary of each class:
@@ -54,7 +54,7 @@ DronesAvoidance Method: This method orchestrates drone avoidance behavior. It it
 
 FindNearbyDrones Method: This method identifies nearby drones based on a predefined safety area radius. It iterates through the positions of other drones and checks if their distance from the given drone falls within the safety radius.
 
-## Detailed Waypoint Generation Explanation
+## Python Waypoint Generation
 
 The waypoint generation is designed to simplify the process of drone pathfinding by automatically calculating waypoints from given inputs such as the required search pattern, target speed, target direction etc, significantly reducing the time and effort required for other parts of the team to program the drone to do as we wish. It is intended to, using a series of inputs such as the current environmental conditions and required search area, compute all the waypoints for the drone to follow specific search patterns designed to optimise searching. This will make it easier for the other teams to operate the drone as programming has to be done on their end.
 
