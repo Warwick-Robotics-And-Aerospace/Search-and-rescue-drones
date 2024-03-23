@@ -54,6 +54,12 @@ DronesAvoidance Method: This method orchestrates drone avoidance behavior. It it
 
 FindNearbyDrones Method: This method identifies nearby drones based on a predefined safety area radius. It iterates through the positions of other drones and checks if their distance from the given drone falls within the safety radius.
 
+## Detailed Waypoint Generation Explanation
+
+The waypoint generation is designed to simplify the process of drone pathfinding by automatically calculating waypoints from given inputs such as the required search pattern, target speed, target direction etc, significantly reducing the time and effort required for other parts of the team to program the drone to do as we wish. It is intended to, using a series of inputs such as the current environmental conditions and required search area, compute all the waypoints for the drone to follow specific search patterns designed to optimise searching. This will make it easier for the other teams to operate the drone as programming has to be done on their end.
+
+The end goal for the program is that it can actively interact with the drone and update the path as its sensors send back information regarding the conditions of its flight and position of the target, requiring much less human intervention during its flight. This will also make the drone much safer, as it would have the ability to take action itself if things go wrong during operation.
+
 ## Todo
 
 Still uncertain is how to make the matlab code control the drones which are running ardupilot, once we move away from simulations towards real drones.
